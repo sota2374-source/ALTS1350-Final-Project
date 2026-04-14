@@ -238,7 +238,7 @@ let textData = {
      "11111"
     ],
   
- PD: [
+ p: [
       "00000",
       "00000",
       "00000",
@@ -247,16 +247,16 @@ let textData = {
       "00001",
     ],
       
- EX: [
-      "00100",
-      "00100",
-      "00100",
-      "00100",
-      "00000",
-      "00100"
+ e: [
+      "010",
+      "010",
+      "010",
+      "010",
+      "000",
+      "010"
     ],
 
- QU: [
+ q: [
       "01110",
       "10001",
       "00001",
@@ -284,12 +284,15 @@ function draw() {
   background(210);
 
 // Frame for background of screen
-  drawFrame(0, 0, 400, 400, 8);
+   drawFrame(0, 0, 400, 400, 8);
   
-  drawTab(10, 10, 390, 35, "green");
+   drawTab(10, 10, 390, 35, "green");
   
-  drawText("INTERACTION TOOLEX", 5, 14, 3, 15);
+   drawText("INTERACTION TOOLe", 5, 14, 3, 15);
+
+   drawMinMaxBox(200, 200, 300, 300,  "blue");
   
+
 }
 
 
@@ -364,17 +367,23 @@ function drawTab (x1, y1, x2, y2, c = "blue") {
 
 
 // --------------------------------------------------------------- 
-// MinMax Box Fuction
+// MinMax Box Function
 // ---------------------------------------------------------------
 
-function minMaxBox(x1, x2, y1, y2, c = "gray") {
+function drawMinMaxBox(x1, y1, x2, y2, c = "gray") {
   
 push();
  fill(c);
  noStroke();
   
   beginShape();
-   vertex()
+    vertex(x1, y1);
+    vertex(x2, y1);
+    vertex(x2, y2);
+    vertex(x1, y2);
+  endShape(CLOSE);
+
+ pop();
   
 }
 
@@ -406,7 +415,7 @@ function drawText(str, x, y, size, spacing) {
   for (let i = 0; i < str.length; i++) {
     let letter = str[i];
     
-    drawLetter(letter, x + i * spacing, y, size);  
+      if (textData[letter])
+       drawLetter(letter, x + i * spacing, y, size);  
    }
  }
-
