@@ -36,6 +36,8 @@ function draw() {
     // c = fill color
    drawTab(10, 10, 990, 40, "#01017A");
 
+  drawAreaFrame(350, 45, 990, 550, 5);
+
 // TEXT -----------------------------------------------------------------------------------------------------------------------
  // Text on tab bar at top of screen
   // drawText(str, x, y, size, spacing, c = 255) 
@@ -107,8 +109,6 @@ function draw() {
      drawText("X", 679, 210, 2, 1, 0);
   }
  }
- 
- drawAreaFrame(350, 45, 990, 550, 5);
  
  pop(); 
 
