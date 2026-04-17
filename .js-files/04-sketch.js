@@ -68,7 +68,7 @@ function draw() {
     // (x2, y2) = bottom right corner
     // z = frame thickness
    
-
+ image(drawingLayer, 0, 0);
 
    
   if (mouseHover(918, 15, 938, 35)) {
@@ -130,13 +130,33 @@ function draw() {
     highlight: "#BC544B",
    });
     drawText("X", 971, 19, 2, 1, 255);
-    drawPopUpShadow(310, 210, 710, 510);
+    drawPopUpShadow(310, 210, 710, 435);
 
 // popup frame
-    drawFrame(300, 200, 700, 500, 3);
-    drawTab(304, 204, 696, 228, "#01017A");  
+    drawFrame(300, 200, 700, 425, 3);
+    drawTab(304, 204, 696, 228, "#01017A"); 
+    
+  if (mouseHover(350, 350, 475, 400)) {
+   drawFrame(350, 350, 475, 400, 3, {
+   fill: 100,
+   shadow: 40,
+   highlight: 150,
+   });
+  } else {
+   drawFrame(350, 350, 475, 400, 3);
+  }
 
-  if(mouseHover(674, 206, 694, 226)) {
+  if (mouseHover(525, 350, 650, 400)) {
+   drawFrame(525, 350, 650, 400, 3, {
+   fill: 100,
+   shadow: 40,
+   highlight: 150,
+   });
+  } else {
+   drawFrame(525, 350, 650, 400, 3);
+  }
+
+  if (mouseHover(674, 206, 694, 226)) {
 
 // hover popup x frame
     drawFrame(674, 206, 694, 226, 2, {
@@ -203,8 +223,6 @@ function draw() {
    drawFrame(gridBVals.x1, gridBVals.y1, gridBVals.x2, gridBVals.y2, gridBVals.z);
    drawText("GRID", gridText.x, gridText.y, gridText.size, gridText.spacing, 0);
   }
-
-image(drawingLayer, 0, 0);
 
  pop(); 
 
