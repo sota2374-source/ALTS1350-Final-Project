@@ -1,247 +1,42 @@
 // ------------------------------------------------------------------------------------------------------------------------------ 
-// drawBkgdFrame Function
-// ------------------------------------------------------------------------------------------------------------------------------ 
-
-// Function that draws the highlight/shadow frame around text boxes
-
-function drawBkgdFrame(x1, y1, x2, y2, z) {
-// Input:
-  // (x1, y1) = top left corner
-  // (x2, y2) = bottom right corner
-// z = frame thickness
-
-push();
- noStroke();
-  
-// Fill
-  push();
-   fill(210);
-     beginShape();
-     vertex(x1, y1);
-     vertex(x2, y1);
-     vertex(x2, y2);
-     vertex(x1, y2);
-    endShape(CLOSE);
-  pop();
-
-// Shadow
-  push();
-   fill("gray");
-    beginShape();
-     vertex(x1, y2);
-     vertex(x2, y2);
-     vertex(x2, y1);
-     vertex(x2 - z, y1 + z);
-     vertex(x2 - z, y2 - z);
-     vertex(x1 + z, y2 - z);
-    endShape(CLOSE);
-  pop();
-  
-// Highlight 
-  push();
-   fill("#e5e5e5");
-    beginShape();
-     vertex(x1, y2);
-     vertex(x1, y1);
-     vertex(x2, y1);
-     vertex(x2 - z, y1 + z);
-     vertex(x1 + z, y1 + z);
-     vertex(x1 + z, y2 - z);
-    endShape(CLOSE);
-  pop();
-  
-pop();
-  
-}
-
-
-// ------------------------------------------------------------------------------------------------------------------------------ 
-// drawFrameX Function
-// ------------------------------------------------------------------------------------------------------------------------------ 
-
-// Function that draws the highlight/shadow frame around text boxes
- 
-function drawFrameX(x1, y1, x2, y2, z) {
-// Input:
-  // (x1, y1) = top left corner
-  // (x2, y2) = bottom right corner
-// z = frame thickness 
-
-  
-push();
- noStroke();
-  
-// Fill
-  push();
-   fill("#D0312D");
-     beginShape();
-     vertex(x1, y1);
-     vertex(x2, y1);
-     vertex(x2, y2);
-     vertex(x1, y2);
-    endShape(CLOSE);
-  pop();
-
-// Shadow
-  push();
-   fill("#4E0707");
-    beginShape();
-     vertex(x1, y2);
-     vertex(x2, y2);
-     vertex(x2, y1);
-     vertex(x2 - z, y1 + z);
-     vertex(x2 - z, y2 - z);
-     vertex(x1 + z, y2 - z);
-    endShape(CLOSE);
-  pop();
-  
-// Highlight 
-  push();
-   fill("#BC544B");
-    beginShape();
-     vertex(x1, y2);
-     vertex(x1, y1);
-     vertex(x2, y1);
-     vertex(x2 - z, y1 + z);
-     vertex(x1 + z, y1 + z);
-     vertex(x1 + z, y2 - z);
-    endShape(CLOSE);
-  pop();
-  
-pop();
-}
-
-
-// ------------------------------------------------------------------------------------------------------------------------------ 
-// drawFrameMax Function
-// ------------------------------------------------------------------------------------------------------------------------------ 
-
-// Function that draws the highlight/shadow frame around text boxes
- 
-function drawFrameMax(x1, y1, x2, y2, z) {
-// Input:
-  // (x1, y1) = top left corner
-  // (x2, y2) = bottom right corner
-// z = frame thickness
-  
-push();
- noStroke();
-  
-// Fill
-  push();
-   fill("#FFDA03");
-     beginShape();
-     vertex(x1, y1);
-     vertex(x2, y1);
-     vertex(x2, y2);
-     vertex(x1, y2);
-    endShape(CLOSE);
-  pop();
-
-// Shadow
-  push();
-   fill("#C49102");
-    beginShape();
-     vertex(x1, y2);
-     vertex(x2, y2);
-     vertex(x2, y1);
-     vertex(x2 - z, y1 + z);
-     vertex(x2 - z, y2 - z);
-     vertex(x1 + z, y2 - z);
-    endShape(CLOSE);
-  pop();
-  
-// Highlight 
-  push();
-   fill("#FDE992");
-    beginShape();
-     vertex(x1, y2);
-     vertex(x1, y1);
-     vertex(x2, y1);
-     vertex(x2 - z, y1 + z);
-     vertex(x1 + z, y1 + z);
-     vertex(x1 + z, y2 - z);
-    endShape(CLOSE);
-  pop();
-  
-pop();
-}
-
-
-// ------------------------------------------------------------------------------------------------------------------------------ 
-// drawFrameMin Function
-// ------------------------------------------------------------------------------------------------------------------------------ 
-
-// Function that draws the highlight/shadow frame around text boxes
- 
-function drawFrameMin(x1, y1, x2, y2, z) {
-// Input:
-  // (x1, y1) = top left corner
-  // (x2, y2) = bottom right corner
-// z = frame thickness
-  
-push();
- noStroke();
-  
-// Fill
-  push();
-   fill("#03AC13");
-     beginShape();
-     vertex(x1, y1);
-     vertex(x2, y1);
-     vertex(x2, y2);
-     vertex(x1, y2);
-    endShape(CLOSE);
-  pop();
-
-// Shadow
-  push();
-   fill("#354A21");
-    beginShape();
-     vertex(x1, y2);
-     vertex(x2, y2);
-     vertex(x2, y1);
-     vertex(x2 - z, y1 + z);
-     vertex(x2 - z, y2 - z);
-     vertex(x1 + z, y2 - z);
-    endShape(CLOSE);
-  pop();
-  
-// Highlight 
-  push();
-   fill("#98Bf64");
-    beginShape();
-     vertex(x1, y2);
-     vertex(x1, y1);
-     vertex(x2, y1);
-     vertex(x2 - z, y1 + z);
-     vertex(x1 + z, y1 + z);
-     vertex(x1 + z, y2 - z);
-    endShape(CLOSE);
-  pop();
-  
-pop();
-}
-
-
-// ------------------------------------------------------------------------------------------------------------------------------ 
 // drawFrame Function
 // ------------------------------------------------------------------------------------------------------------------------------ 
 
 // Function that draws the highlight/shadow frame around text boxes
  
-function drawFrame(x1, y1, x2, y2, z) {
-// Input:
-  // (x1, y1) = top left corner
-  // (x2, y2) = bottom right corner
-// z = frame thickness
+function drawFrame(x1, y1, x2, y2, z, colors = {}) {
+
+  let {
+    fill: c1 = 210,
+    fillAlpha: a1,
+
+    shadow: c2 = 128,
+    shadowAlpha: a2,
+
+    highlight: c3 = 229,
+    highlightAlpha: a3,
+
+    alpha: a = 255
+  } = colors;
+
+  a1 = a1 ?? a;
+  a2 = a2 ?? a;
+  a3 = a3 ?? a;
   
 push();
  noStroke();
-  
-// Fill
+
+ let fillColor = color(c1);
+ fillColor.setAlpha(a1);
+
+ let shadowColor = color(c2);
+ shadowColor.setAlpha(a2);
+
+ let highlightColor = color(c3);
+ highlightColor.setAlpha(a3);
+
   push();
-   fill(210);
+   fill(fillColor);
      beginShape();
      vertex(x1, y1);
      vertex(x2, y1);
@@ -252,7 +47,7 @@ push();
 
 // Shadow
   push();
-   fill("gray");
+   fill(shadowColor);
     beginShape();
      vertex(x1, y2);
      vertex(x2, y2);
@@ -265,7 +60,7 @@ push();
   
 // Highlight 
   push();
-   fill("#e5e5e5");
+   fill(highlightColor);
     beginShape();
      vertex(x1, y2);
      vertex(x1, y1);
@@ -278,63 +73,6 @@ push();
   
 pop();
   
-}
-
-
-// ------------------------------------------------------------------------------------------------------------------------------  
-// Tab Function
-// ------------------------------------------------------------------------------------------------------------------------------ 
-
-// Draws the tab bar at the top
-
-function drawTab (x1, y1, x2, y2, c = "blue") {
-
- push();
-  fill(c); 
-  noStroke();
-   
-   beginShape();
-    vertex(x1, y1);
-    vertex(x2, y1);
-    vertex(x2, y2);
-    vertex(x1, y2);
-   endShape(CLOSE);
-  
- pop();
-  
-}
-
-
-// ------------------------------------------------------------------------------------------------------------------------------  
-// drawMaxSymbol Function
-// ------------------------------------------------------------------------------------------------------------------------------ 
-
-function drawMaxSymbol(x1, y1, x2, y2, z, c = 0, maxBar = 2) {
-
- push();
-  strokeWeight(z);
-  stroke(c);
-  noFill();
-   
-   beginShape();
-     vertex(x1, y1);
-     vertex(x2, y1);
-     vertex(x2, y2);
-     vertex(x1, y2);
-    endShape(CLOSE);
-
-  noStroke();
-  fill(c);
-
-   beginShape();
-     vertex(x1, y1);
-     vertex(x2, y1);
-     vertex(x2, y1 + maxBar);
-     vertex(x1, y1 + maxBar);
-   endShape(CLOSE);
-   
-  pop();
-
 }
 
 
@@ -355,59 +93,34 @@ function drawMinSymbol(x1, y1, x2, y2, z, c = 0) {
 
 }
 
-
 // ------------------------------------------------------------------------------------------------------------------------------  
-// drawPopUpBox Function
+// drawMaxSymbol Function
 // ------------------------------------------------------------------------------------------------------------------------------ 
 
-function drawPopUpBox(x1, y1, x2, y2, z) {
-// Input:
-  // (x1, y1) = top left corner
-  // (x2, y2) = bottom right corner
-// z = frame thickness
-
-push();
- noStroke();
-  
-// Fill
+function drawMaxSymbol(x1, y1, x2, y2, z, c = 0, maxBar = 2) {
   push();
-   fill(210);
-     beginShape();
-     vertex(x1, y1);
-     vertex(x2, y1);
-     vertex(x2, y2);
-     vertex(x1, y2);
-    endShape(CLOSE);
-  pop();
+   strokeWeight(z);
+   stroke(c);
+   noFill();
 
-// Shadow
-  push();
-   fill("gray");
-    beginShape();
-     vertex(x1, y2);
-     vertex(x2, y2);
-     vertex(x2, y1);
-     vertex(x2 - z, y1 + z);
-     vertex(x2 - z, y2 - z);
-     vertex(x1 + z, y2 - z);
-    endShape(CLOSE);
-  pop();
-  
-// Highlight 
-  push();
-   fill("#e5e5e5");
-    beginShape();
-     vertex(x1, y2);
-     vertex(x1, y1);
-     vertex(x2, y1);
-     vertex(x2 - z, y1 + z);
-     vertex(x1 + z, y1 + z);
-     vertex(x1 + z, y2 - z);
-    endShape(CLOSE);
-  pop();
+  beginShape();
+    vertex(x1, y1);
+    vertex(x2, y1);
+    vertex(x2, y2);
+    vertex(x1, y2);
+  endShape(CLOSE);
 
-pop();
-  
+  noStroke();
+  fill(c);
+
+  beginShape();
+    vertex(x1, y1);
+    vertex(x2, y1);
+    vertex(x2, y1 + maxBar);
+    vertex(x1, y1 + maxBar);
+  endShape(CLOSE);
+
+  pop();
 }
 
 
@@ -418,8 +131,7 @@ pop();
 function drawPopUpShadow (x1, y1, x2, y2, c = 80, a = 200) {
 
  push();
-  fill(c); 
-  alpha(a);
+  fill(c, a); 
   noStroke();
    
    beginShape();
@@ -439,12 +151,20 @@ function drawPopUpShadow (x1, y1, x2, y2, c = 80, a = 200) {
 // ------------------------------------------------------------------------------------------------------------------------------ 
 
 function mousePressed() {
+ if (xPopUpBox == true) {
+
+  if (mouseHover(674, 206, 694, 226)) {
+     xPopUpBox = false;
+    }
+  return;
+ }
+ 
  if(mouseHover(966, 15, 986, 35)) {
    xPopUpBox = true;
  }
 
- if (xPopUpBox == true && mouseHover(674, 206, 694, 226, 2)) {
-   xPopUpBox = false;
+ if(mouseHover(940, 45, 990, 70)) {
+   pngGrid = !pngGrid;
  }
 }
 
@@ -471,6 +191,26 @@ function drawLetter(letter, x, y, size, c = 0) {
  pop(); 
 
 }  
+
+// ------------------------------------------------------------------------------------------------------------------------------ 
+// drawTab Function
+// ------------------------------------------------------------------------------------------------------------------------------
+
+function drawTab( x1, y1, x2, y2, c = "blue") {
+  push();
+   noStroke();
+   fill(c);
+  
+  beginShape();
+    vertex(x1, y1);
+    vertex(x2, y1);
+    vertex(x2, y2);
+    vertex(x1, y2);
+   endShape(CLOSE);
+  
+  pop();
+}
+
 
 
 // ------------------------------------------------------------------------------------------------------------------------------ 
@@ -520,56 +260,48 @@ function mouseHover(x1, y1, x2, y2) {
  return mouseX >= x1 + offsetX && mouseX <= x2 + offsetX && mouseY >= y1 + offsetY && mouseY <= y2 + offsetY;
 }
 
+
 // ------------------------------------------------------------------------------------------------------------------------------ 
-// drawAreaFrame function
+// drawPngGrid function
 // ------------------------------------------------------------------------------------------------------------------------------
 
-function drawAreaFrame(x1, y1, x2, y2, z) {
-// Input:
-  // (x1, y1) = top left corner
-  // (x2, y2) = bottom right corner
-// z = frame thickness
+function drawPngGrid(x1, y1, x2, y2, tileSize = 20) {
 
-push();
- noStroke();
+ push();
+  noStroke();
+ 
+  let cols = floor((x2 - x1) / tileSize);
+  let rows = floor((y2 - y1) / tileSize);
+ 
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
   
-// Fill
-  push();
-   fill(255);
-     beginShape();
-     vertex(x1, y1);
-     vertex(x2, y1);
-     vertex(x2, y2);
-     vertex(x1, y2);
-    endShape(CLOSE);
-  pop();
+       if ((row + col) % 2 === 0) {
+        fill(255);
+       } else {
+        fill(235);
+       }
+  
+       rect(x1 + col * tileSize, y1 + row * tileSize, tileSize, tileSize);
+       }
+    }
+  
+   pop(); 
+}
 
-// Shadow
-  push();
-   fill(90);
-    beginShape();
-     vertex(x1, y2);
-     vertex(x2, y2);
-     vertex(x2, y1);
-     vertex(x2 - z, y1 + z);
-     vertex(x2 - z, y2 - z);
-     vertex(x1 + z, y2 - z);
-    endShape(CLOSE);
-  pop();
-  
-// Highlight 
-  push();
-   fill("gray");
-    beginShape();
-     vertex(x1, y2);
-     vertex(x1, y1);
-     vertex(x2, y1);
-     vertex(x2 - z, y1 + z);
-     vertex(x1 + z, y1 + z);
-     vertex(x1 + z, y2 - z);
-    endShape(CLOSE);
-  pop();
-  
- pop();
+function translateDrawing() {
+  let translateX = mouseX - offsetX;
+  let translateY = mouseY - offsetY;
+  let translatePMouseX = pmouseX - offsetX;
+  let translatePMouseY = pmouseY - offsetY;
 
+  if (mouseIsPressed && insideDrawArea(translateX, translateY) && insideDrawArea(translatePMouseX, translatePMouseY)) {
+    drawingLayer.stroke(0);
+    drawingLayer.strokeWeight(2);
+    drawingLayer.line(translateX, translateY, translatePMouseX, translatePMouseY);
+  }
+}
+
+function insideDrawArea(x, y) {
+ return(x > penArea.x1 && x < penArea.x2 && y > penArea.y1 && y < penArea.y2);
 }
