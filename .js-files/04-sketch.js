@@ -4,9 +4,12 @@
 
 function setup() {
   createCanvas(1400, 800);
+  
+ // Sets x/y offset to center of canvas to accomodate white space on sides
   offsetX = (width - canvasW) / 2;
   offsetY = (height - canvasH) / 2;
 
+ // Creates clear graphics layer so user drawing doesn't get rewritten every frame
   drawingLayer = createGraphics(width, height);
   drawingLayer.clear();
 }
@@ -18,214 +21,183 @@ function setup() {
 function draw() {
   background(255);
 
+ movePopUpDrag();
+
+ let blockBackgroundUI = xPopUpBox;
+
+// translates everything by offset x/y distance
  push();
  translate(offsetX, offsetY);
 
-// background frame
-    drawFrame(0, 0, 1000, 700, 6);
+// draws "window," or background frame
+ drawFrame(0, 0, 1000, 700, 6);
 
-// TABS -----------------------------------------------------------------------------------------------------------------------
- // Colored tab bar at top of screen
-  // drawTab( x1, y1, x2, y2, c = "blue")
-   // Input:
-    // (x1, y1) = top left corner
-    // (x2, y2) = bottom right corner
-    // c = fill color
-   drawTab(10, 10, 990, 40, "#01017A");
+// draws main blue tab on canvas
+ drawTab(10, 10, 990, 40, "#01017A");
 
- // drawArea frame
-  drawFrame(drawArea.x1, drawArea.y1, drawArea.x2, drawArea.y2, 5, {
+// drawArea frame
+ drawFrame(drawArea.x1, drawArea.y1, drawArea.x2, drawArea.y2, 5, {
     fill: 255,
     shadow: 90, 
     highlight: 128
   });
 
-// TEXT -----------------------------------------------------------------------------------------------------------------------
- // Text on tab bar at top of screen
-  // drawText(str, x, y, size, spacing, c = 255) 
-   // Input:
-    // str = text string (refer to textData for object keys)
-    // (x,y) = x/y coordinates of text
-    // size = text size
-    // spacing = distance between letters
-    // c = color (defaults to white)
-   drawText("New Project - No_File_Name", 15, 18, 2.5, 1.5, 255);
+// text for file name
+  drawText("New Project - No_File_Name", 15, 18, 2.5, 1.5, 255);
 
-// BOXES -----------------------------------------------------------------------------------------------------------------------
- // Creates background boxes
-  // drawBox(x1, y1, x2, y2, c = "gray") 
-   // Input:
-    // (x1, y1) = top left corner
-    // (x2, y2) = bottom right corner
-    // c = fill color  
-  
-
-// FRAMES -----------------------------------------------------------------------------------------------------------------------
- // Frame for background of screen
-  // drawFrame(x1, y1, x2, y2, z)
-   // Input:
-    // (x1, y1) = top left corner
-    // (x2, y2) = bottom right corner
-    // z = frame thickness
-   
- image(drawingLayer, 0, 0);
-
-   
-  if (mouseHover(918, 15, 938, 35)) {
-
-// hover minimize frame
-    drawFrame(918, 15, 938, 35, 2, {
-    fill: "#03AC13", 
-    shadow: "#354A21", 
-    highlight: "#98Bf64"
-  });
+// if mouse hovers over minimize button, it turns green
+ // otherwise, it stays neutral
+ if (!blockBackgroundUI && mouseHover(918, 15, 938, 35)) {
+   drawFrame(918, 15, 938, 35, 2, {
+     fill: "#03AC13", 
+     shadow: "#354A21", 
+     highlight: "#98Bf64"
+    });
    drawMinSymbol(922, 30, 934, 30, 2, 255);
   } else {
-
-// neutral minimize frame 
-    drawFrame(918, 15, 938, 35, 2);
-    drawMinSymbol(922, 30, 934, 30, 2, 0);
+   drawFrame(918, 15, 938, 35, 2);
+   drawMinSymbol(922, 30, 934, 30, 2, 0);
   }
 
-
-  if (mouseHover(942, 15, 962, 35)) {
-
-// hover maximize frame
+// if mouse hovers over maximize button, it turns yellow
+ // otherwise, it stays neutral
+ if (!blockBackgroundUI && mouseHover(942, 15, 962, 35)) {
    drawFrame(942, 15, 962, 35, 2, {
-    fill: "#FFDA03",
-    shadow: "#C49102",
-    highlight: "#FDE992",
-  });
+     fill: "#FFDA03",
+     shadow: "#C49102",
+     highlight: "#FDE992",
+    });
    drawMaxSymbol(947, 20, 957, 30, 2, 255, 3);
   } else {
-
-// neutral maximize frame
-    drawFrame(942, 15, 962, 35, 2);
-    drawMaxSymbol(947, 20, 957, 30, 2, 0, 3);
+   drawFrame(942, 15, 962, 35, 2);
+   drawMaxSymbol(947, 20, 957, 30, 2, 0, 3);
   }
-  
 
- if (mouseHover(966, 15, 986, 35)) {
-
-// hover x frame
+// if mouse hovers over x button, it turns red
+ // otherwise, it stays neutral
+ if (!blockBackgroundUI && mouseHover(966, 15, 986, 35)) {
    drawFrame(966, 15, 986, 35, 2, {
-    fill: "#D0312D",
-    shadow: "#4E0707",
-    highlight: "#BC544B",
-   });
+     fill: "#D0312D",
+     shadow: "#4E0707",
+     highlight: "#BC544B",
+    });
    drawText("X", 971, 19, 2, 1, 255);
   } else {
-
-// neutral x frame
    drawFrame(966, 15, 986, 35, 2);
    drawText("X", 971, 19, 2, 1, 0);
   }
 
-  if (xPopUpBox == true) {
-
-// x is pressed frame
-    drawFrame(966, 15, 986, 35, 2, {
-    fill: "#D0312D",
-    shadow: "#4E0707",
-    highlight: "#BC544B",
-   });
-    drawText("X", 971, 19, 2, 1, 255);
-    drawPopUpShadow(310, 210, 710, 435);
-
-// popup frame
-    drawFrame(300, 200, 700, 425, 3);
-    drawTab(304, 204, 696, 228, "#01017A"); 
-    
-  if (mouseHover(350, 350, 475, 400)) {
-   drawFrame(350, 350, 475, 400, 3, {
-   fill: 100,
-   shadow: 40,
-   highlight: 150,
-   });
-  } else {
-   drawFrame(350, 350, 475, 400, 3);
-  }
-
-  if (mouseHover(525, 350, 650, 400)) {
-   drawFrame(525, 350, 650, 400, 3, {
-   fill: 100,
-   shadow: 40,
-   highlight: 150,
-   });
-  } else {
-   drawFrame(525, 350, 650, 400, 3);
-  }
-
-  if (mouseHover(674, 206, 694, 226)) {
-
-// hover popup x frame
-    drawFrame(674, 206, 694, 226, 2, {
-     fill: "#D0312D",
-     shadow: "#4E0707",
-     highlight: "#BC544B",
-   });
-     drawText("X", 679, 210, 2, 1, 255);
-   } else {
-
-// neutral popup x frame
-     drawFrame(674, 206, 694, 226, 2);
-     drawText("X", 679, 210, 2, 1, 0);
-   }
-  }
-
+ // if the grid button is pressed, the pngGrid + frame appears in the drawing area (see mousePressed/pngGrid functions)
  if (pngGrid == true) {
    drawPngGrid(drawArea.x1, drawArea.y1, drawArea.x2, drawArea.y2);
-
-// hollow pngGrid frame
    drawFrame(drawArea.x1, drawArea.y1, drawArea.x2, drawArea.y2, 5, {
-    fill: 255,
-    fillAlpha: 0,
-    shadow: 90,
-    highlight: 128,
-   });
+     fill: 255,
+     fillAlpha: 0,
+     shadow: 90,
+     highlight: 128,
+    });
   }
   
- let pngHover = mouseHover(gridBVals.x1, gridBVals.y1, gridBVals.x2, gridBVals.y2);
-
+ // sets up a variable that is true whenever the mouse hovers over the grid button
+  // simplifies hover button color changes
+ let pngHover = !blockBackgroundUI && mouseHover(gridBVals.x1, gridBVals.y1, gridBVals.x2, gridBVals.y2);
+  
+ // if mouse hovers over grid button and pngGrid is off, it darkens
   if(pngHover && pngGrid == false) {
-
-// hover grid button false
    drawFrame(gridBVals.x1, gridBVals.y1, gridBVals.x2, gridBVals.y2, gridBVals.z, {
-    fill: 100,
-    shadow: 40,
-    highlight: 150,
-   });
+     fill: 100,
+     shadow: 40,
+     highlight: 150,
+    });
    drawText("GRID", gridText.x, gridText.y, gridText.size, gridText.spacing, 255);
-
+  
+   // if mouse hovers over grid button and pngGrid is on, it turns light blue
   } else if (pngHover && pngGrid == true) {
-
-// hover grid button true
    drawFrame(gridBVals.x1, gridBVals.y1, gridBVals.x2, gridBVals.y2, gridBVals.z, {
-    fill: "#3030ef",
-    shadow: "#19308f",
-    highlight: "#4d76e7"
-   });
+     fill: "#3030ef",
+     shadow: "#19308f",
+     highlight: "#4d76e7"
+    });
    drawText("GRID", gridText.x, gridText.y, gridText.size, gridText.spacing, 255);
 
+   // if mouse is NOT hovering over grid button and pngGrid is on, it turns dark blue
   } else if (pngGrid == true) {
-
-// neutral grid button true
    drawFrame(gridBVals.x1, gridBVals.y1, gridBVals.x2, gridBVals.y2, gridBVals.z, {
-    fill: "#01017A",
-    shadow: "#131622",
-    highlight: "#0732aa"
-   });
+     fill: "#01017A",
+     shadow: "#131622",
+     highlight: "#0732aa"
+    });
    drawText("GRID", gridText.x, gridText.y, gridText.size, gridText.spacing, 255);
      
+   // if mouse is NOT hovering and pngGrid is off, it stays neutral
   } else {
-
-// neutral grid button false
    drawFrame(gridBVals.x1, gridBVals.y1, gridBVals.x2, gridBVals.y2, gridBVals.z);
    drawText("GRID", gridText.x, gridText.y, gridText.size, gridText.spacing, 0);
   }
 
+// creates drawingLayer for user drawing
+  image(drawingLayer, 0, 0);
+
+// if the x button is pressed, a popup window appears (see function mousePressed)
+  if (xPopUpBox == true) {
+
+   // keeps x button red (activated) in background window 
+    drawFrame(966, 15, 986, 35, 2, {
+      fill: "#D0312D",
+      shadow: "#4E0707",
+      highlight: "#BC544B",
+     });
+    drawText("X", 971, 19, 2, 1, 255);
+ 
+   // draws popup window + shadow
+    drawPopUpShadow(popUpBox.x1 + 10, popUpBox.y1 + 10, popUpBox.x2 + 10, popUpBox.y2 + 10);
+    drawFrame(popUpBox.x1, popUpBox.y1, popUpBox.x2, popUpBox.y2, 3);
+    drawTab(popUpBox.x1 + 4, popUpBox.y1 + 4, popUpBox.x2 - 4, popUpBox.y1 + 28, "#01017A"); 
+    
+   // Left/right popup buttons:
+   // if mouse hovers over the left popup window button, it darkens
+    // otherwise, it stays neutral
+    if (mouseHover(popUpBox.x1 + 50, popUpBox.y1 + 150, popUpBox.x1 + 175, popUpBox.y1 + 200)) {
+      drawFrame(popUpBox.x1 + 50, popUpBox.y1 + 150, popUpBox.x1 + 175, popUpBox.y1 + 200, 3, {
+       fill: 100,
+       shadow: 40,
+       highlight: 150,
+      });
+    } else {
+     drawFrame(popUpBox.x1 + 50, popUpBox.y1 + 150, popUpBox.x1 + 175, popUpBox.y1 + 200, 3);
+    }
+
+   // if mouse hovers over the right popup window button, it darkens
+    // otherwise, it stays neutral
+    if (mouseHover(popUpBox.x1 + 225, popUpBox.y1 + 150, popUpBox.x1 + 350, popUpBox.y1 + 200)) {
+     drawFrame(popUpBox.x1 + 225, popUpBox.y1 + 150, popUpBox.x1 + 350, popUpBox.y1 + 200, 3, {
+       fill: 100,
+       shadow: 40,
+       highlight: 150,
+      });
+    } else {
+     drawFrame(popUpBox.x1 + 225, popUpBox.y1 + 150, popUpBox.x1 + 350, popUpBox.y1 + 200, 3);
+    }
+ 
+   // if mouse hovers over popup x button, it turns red
+    // otherwise, it stays neutral
+    if (mouseHover(popUpBox.x1 + 374, popUpBox.y1 + 6, popUpBox.x1 + 394, popUpBox.y1 + 26)) {
+     drawFrame(popUpBox.x1 + 374, popUpBox.y1 + 6, popUpBox.x1 + 394, popUpBox.y1 + 26, 2, {
+       fill: "#D0312D",
+       shadow: "#4E0707",
+       highlight: "#BC544B",
+      });
+     drawText("X", popUpBox.x1 + 379, popUpBox.y1 + 10, 2, 1, 255);
+    } else {
+     drawFrame(popUpBox.x1 + 374, popUpBox.y1 + 6, popUpBox.x1 + 394, popUpBox.y1 + 26, 2);
+     drawText("X", popUpBox.x1 + 379, popUpBox.y1 + 10, 2, 1, 0);
+    }
+  }
+
+ // pop button for x/y translation
  pop(); 
 
+ // tranlates user drawing
  translateDrawing();
 
 }
