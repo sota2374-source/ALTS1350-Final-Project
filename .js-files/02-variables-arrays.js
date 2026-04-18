@@ -16,7 +16,9 @@ let gridBVals = {x1: 930, y1: 45, x2: 990, y2: 75, z: 3};
 let gridText = {x: 938.5, y: 53, size: 2.5, spacing: 1};
 
 // creates array for popUpBox boundaries, allows box to be moved around
+const popUpStartPos = {x1: 300, y1: 200, x2: 700, y2: 425}
 let popUpBox = {x1: 300, y1: 200, x2: 700, y2: 425};
+
 let isDraggingPopUp = false;
 let dragOffsetX = 0;
 let dragOffsetY = 0;

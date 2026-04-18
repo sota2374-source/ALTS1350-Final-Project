@@ -135,6 +135,30 @@ function draw() {
    drawText("GRID", gridText.x, gridText.y, gridText.size, gridText.spacing, 0);
   }
 
+drawColBox(350, 605, 390, 645, 3, {
+ fill: "#FF0000",
+ shadow: 200,
+ highlight: 150
+});
+
+drawColBox(395, 605, 440, 645, 3, {
+ fill: "#0040ff",
+ shadow: 200,
+ highlight: 150
+});
+
+drawColBox(350, 650, 390, 690, 3, {
+ fill: "#06402b",
+ shadow: 200,
+ highlight: 150
+});
+
+drawColBox(395, 650, 440, 690, 3, {
+ fill: "#c91f96",
+ shadow: 200,
+ highlight: 150
+});
+
 // creates drawingLayer for user drawing
   image(drawingLayer, 0, 0);
 
