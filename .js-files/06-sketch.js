@@ -12,11 +12,15 @@ function setup() {
  // Creates clear graphics layer so user drawing doesn't get rewritten every frame
   drawingLayer = createGraphics(width, height);
   drawingLayer.clear();
+
+// cursor("none");
+
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------ 
 // Draw() Function
 // ------------------------------------------------------------------------------------------------------------------------------  
+
 
 function draw() {
   background(255);
@@ -34,6 +38,8 @@ function draw() {
 
 // draws main blue tab on canvas
  drawTab(10, 10, 990, 40, "#01017A");
+
+ drawColorPalette();
 
 // drawArea frame
  drawFrame(drawArea.x1, drawArea.y1, drawArea.x2, drawArea.y2, 5, {
@@ -135,30 +141,6 @@ function draw() {
    drawText("GRID", gridText.x, gridText.y, gridText.size, gridText.spacing, 0);
   }
 
-drawColBox(350, 605, 390, 645, 3, {
- fill: "#FF0000",
- shadow: 200,
- highlight: 150
-});
-
-drawColBox(395, 605, 440, 645, 3, {
- fill: "#0040ff",
- shadow: 200,
- highlight: 150
-});
-
-drawColBox(350, 650, 390, 690, 3, {
- fill: "#06402b",
- shadow: 200,
- highlight: 150
-});
-
-drawColBox(395, 650, 440, 690, 3, {
- fill: "#c91f96",
- shadow: 200,
- highlight: 150
-});
-
 // creates drawingLayer for user drawing
   image(drawingLayer, 0, 0);
 
@@ -220,6 +202,22 @@ drawColBox(395, 650, 440, 690, 3, {
 
  // pop button for x/y translation
  pop(); 
+
+ if (insideDrawArea(mouseX - offsetX, mouseY - offsetY) && xPopUpBox == false) {
+   push();
+   
+   if (mouseIsPressed) {
+     stroke(currentPenColor);
+     fill(currentPenColor);
+   } else {
+     stroke(currentPenColor);
+     noFill(); 
+   }
+
+   strokeWeight(2);
+   circle(mouseX, mouseY, 10);
+   pop();
+  }
 
  // tranlates user drawing
  translateDrawing();

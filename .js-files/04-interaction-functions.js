@@ -26,6 +26,10 @@ function mousePressed() {
    return;
   }
  
+ if (checkColorPaletteClick(localX, localY)) {
+  return;
+ }
+
  if(mouseHover(966, 15, 986, 35)) {
    resetPopUpBox();
    xPopUpBox = true;
@@ -39,10 +43,7 @@ function mousePressed() {
 
 }
 
-// ------------------------------------------------------------------------------------------------------------------------------  
 // mouseReleased function ------------------------------------------------------------------------------------------------------- 
-
-// -----------------------
 function mouseReleased() {
  isDraggingPopUp = false;
 }
@@ -93,4 +94,37 @@ function resetPopUpBox() {
  popUpBox.y1 = popUpStartPos.y1;
  popUpBox.x2 = popUpStartPos.x2;
  popUpBox.y2 = popUpStartPos.y2;
+}
+
+// ------------------------------------------------------------------------------------------------------------------------------  
+// insideColBoxColArea Function
+// ------------------------------------------------------------------------------------------------------------------------------ 
+
+function insideColBoxColorArea(mx, my, box, z) {
+ return (mx > box.x1 + 2 * z && mx < box.x2 - z && my > box.y1 + 2 * z && my < box.y2 - z);
+}
+
+function checkColorPaletteClick(localX, localY) {
+ if (!insideColPaletteArea(localX, localY)) return false;
+
+ let totalColBoxes = colBoxCols * colBoxRows;
+
+ for (let i = 0; i < totalColBoxes; i++) {
+   let boxColor = primaryPalette[i];
+   if (!boxColor) continue;
+
+   let box = getColBoxBounds(i);
+
+   if (insideColBoxColorArea(localX, localY, box, colBoxFrame)) {
+     currentPenColor = boxColor;
+     return true;
+    }
+  }
+
+ return false;
+}
+
+
+function insideColPaletteArea(x, y) {
+ return (x > colPaletteArea.x1 && x < colPaletteArea.x2 && y > colPaletteArea.y1 && y < colPaletteArea.y2);
 }

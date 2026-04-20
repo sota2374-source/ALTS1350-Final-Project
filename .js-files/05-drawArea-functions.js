@@ -21,8 +21,8 @@ function translateDrawing() {
   let translatePMouseY = pmouseY - offsetY; 
  
  if (mouseIsPressed && insideDrawArea(translateX, translateY) && insideDrawArea(translatePMouseX, translatePMouseY)) {
-   drawingLayer.stroke(0);
-   drawingLayer.strokeWeight(2);
+   drawingLayer.stroke(currentPenColor);
+   drawingLayer.strokeWeight(5);
    drawingLayer.line(translateX, translateY, translatePMouseX, translatePMouseY);
  }
 }

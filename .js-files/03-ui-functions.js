@@ -289,3 +289,32 @@ function drawText(str, x, y, size = 1, spacing = 1, c = 0) {
     }
   }
 }
+
+function getColBoxBounds(index) {
+  let col = index % colBoxCols;
+  let row = floor(index / colBoxCols);
+
+  let x1 = colBoxStartX + col * (colBoxSize + colBoxGap);
+  let y1 = colBoxStartY + row * (colBoxSize + colBoxGap);
+  let x2 = x1 + colBoxSize;
+  let y2 = y1 + colBoxSize;
+
+  return { x1, y1, x2, y2 };
+}
+
+function drawColorPalette() {
+ let totalColBoxes = colBoxCols * colBoxRows;
+
+  for (let i = 0; i < totalColBoxes; i++) {
+   let box = getColBoxBounds(i);
+   let boxColor = primaryPalette[i]
+
+   if (boxColor) {
+     drawColBox(box.x1, box.y1, box.x2, box.y2, colBoxFrame, {
+       fill: boxColor,
+       shadow: 200,
+       highlight: 150
+      });
+    }
+  }
+}
