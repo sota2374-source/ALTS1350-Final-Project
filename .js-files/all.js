@@ -4,11 +4,13 @@
 
 let drawingLayer;
 
+let blockNextDraw = false;
+
 // insets penArea boundary so user can't draw on drawArea frame
 let penInset = 5;
 
 // creates drawArea and penArea boundaries so users can only create within boundaries
-let drawArea = {x1: 350, y1: 80, x2: 990, y2: 625};
+let drawArea = {x1: 350, y1: 80, x2: 990, y2: 615};
 let penArea = {x1: drawArea.x1 + penInset, y1: drawArea.y1 + penInset, x2: drawArea.x2 - penInset, y2: drawArea.y2 - penInset};
 
 // grid button/text values, simplifies button hover mechanics
@@ -35,7 +37,7 @@ let xPopUpBox = false;
 let pngGrid = false;
 
 let colBoxCols = 4;
-let colBoxRows = 13;
+let colBoxRows = 12;
 
 let colBoxSize = 40;
 let colBoxGap = 5;
@@ -50,18 +52,35 @@ let colPaletteH = colBoxRows * colBoxSize + (colBoxRows - 1) * colBoxGap;
 let colPaletteArea = {x1: colBoxStartX, y1: colBoxStartY, x2: colBoxStartX + colPaletteW, y2: colBoxStartY + colPaletteH};
 
 // Color palette data:
-let primaryPalette = ["#c91f96", "#06402b", "#0040ff", "#FF0000", "#ff9900", "#ffe600", "#00cc66", "#00ffff",
-  "#6633ff", "#ff66cc", "#999999", "#ffffff",
-  "#000000", "#7a3b00", "#4b0082", "#6b8e23",
-  "#4682b4", "#8b0000", "#ff1493", "#20b2aa",
-  "#daa520", "#708090", "#adff2f", "#ff4500",
-  "#2f4f4f", "#9932cc", "#dc143c", "#1e90ff",
-  "#228b22", "#ff69b4", "#b8860b", "#00ced1",
-  "#cd5c5c", "#556b2f", "#483d8b", "#8fbc8f",
-  "#ba55d3", "#f4a460", "#a0522d", "#5f9ea0",
-  "#c0c0c0", "#87ceeb", "#d2691e", "#ffb6c1",
-  "#3cb371", "#b22222", "#4169e1", "#ffd700",
-  "#8a2be2", "#f08080", "#00fa9a", "#191970"];
+let primaryPalette = [
+  "#ffffff", "#d9d9d9", "#808080", "#000000",
+  "#fff2cc", "#ffe599", "#ffd966", "#f1c232",
+  "#fce5cd", "#f9cb9c", "#f6b26b", "#e69138",
+  "#f4cccc", "#ea9999", "#e06666", "#cc0000",
+  "#f4cccc", "#f4b6c2", "#ff66cc", "#cc3399",
+  "#d9d2e9", "#b4a7d6", "#8e7cc3", "#674ea7",
+  "#cfe2f3", "#9fc5e8", "#6fa8dc", "#3d85c6",
+  "#d0e0e3", "#a2c4c9", "#76a5af", "#45818e",
+  "#d9ead3", "#b6d7a8", "#93c47d", "#6aa84f",
+  "#fff2cc", "#ffe599", "#d9b26b", "#bf9000",
+  "#ead1dc", "#d5a6bd", "#c27ba0", "#a64d79",
+  "#c9daf8", "#a4c2f4", "#6d9eeb", "#1155cc"
+];
+
+let pastelsPalette = [
+  "#ffd9d9", "#ffdcd9", "#ffdfd9", "#ffe2d9",
+  "#ffe6d9", "#ffe9d9", "#ffecd9", "#fff0d9",
+  "#fff3d9", "#fff6d9", "#fff9d9", "#fffdd9",
+  "#f9ffd9", "#f6ffd9", "#f3ffd9", "#efffd9",
+  "#ecffd9", "#e9ffd9", "#e6ffd9", "#e2ffd9",
+  "#dfffd9", "#dcffd9", "#d9ffd9", "#d9ffdc",
+  "#d9ffdf", "#d9ffe2", "#d9ffe6", "#d9ffe9",
+  "#d9ffec", "#d9fff0", "#d9fff3", "#d9fff6",
+  "#d9fff9", "#d9fffd", "#d9f9ff", "#d9f6ff",
+  "#d9f3ff", "#d9efff", "#d9ecff", "#d9e9ff",
+  "#d9e6ff", "#dce2ff", "#dfdfff", "#e2dcff",
+  "#e6d9ff", "#e9d9ff", "#ecd9ff", "#f0d9ff"
+];
 
 let currentPenColor = "#000000";
 
@@ -373,17 +392,11 @@ function drawColorPalette() {
  let totalColBoxes = colBoxCols * colBoxRows;
 
   for (let i = 0; i < totalColBoxes; i++) {
-   let col = i % colBoxCols;
-   let row = floor(i / colBoxCols);
-
-   let x1 = colBoxStartX + col * (colBoxSize + colBoxGap);
-   let y1 = colBoxStartY + row * (colBoxSize + colBoxGap);
-   let x2 = x1 + colBoxSize;
-   let y2 = y1 + colBoxSize;
-   let boxColor = primaryPalette[i];
+   let box = getColBoxBounds(i);
+   let boxColor = primaryPalette[i]
 
    if (boxColor) {
-     drawColBox(x1, y1, x2, y2, colBoxFrame, {
+     drawColBox(box.x1, box.y1, box.x2, box.y2, colBoxFrame, {
        fill: boxColor,
        shadow: 200,
        highlight: 150
@@ -407,9 +420,24 @@ function mousePressed() {
      xPopUpBox = false;
      isDraggingPopUp = false;
      resetPopUpBox();
+     blockNextDraw = true;
      return;
    }
  
+ if (xPopUpBox && insidePopUpBoxLButtonArea(localX, localY)) {
+     xPopUpBox = false;
+     resetPopUpBox();
+     blockNextDraw = true;
+     return;
+  }
+
+  if (xPopUpBox && insidePopUpBoxRButtonArea(localX, localY)) {
+     xPopUpBox = false;
+     resetPopUpBox();
+     blockNextDraw = true;
+     return;
+  }
+
    if (xPopUpBoxBoundary(localX, localY)) {
      isDraggingPopUp = true;
      dragOffsetX = localX - popUpBox.x1;
@@ -440,6 +468,7 @@ function mousePressed() {
 // mouseReleased function ------------------------------------------------------------------------------------------------------- 
 function mouseReleased() {
  isDraggingPopUp = false;
+ blockNextDraw = false;
 }
 
 // drag logic:
@@ -494,29 +523,6 @@ function resetPopUpBox() {
 // insideColBoxColArea Function
 // ------------------------------------------------------------------------------------------------------------------------------ 
 
-if (checkColorPaletteClick(localX, localY)) {
-   if (!insideColPaletteArea(localX, localY)) 
-    return false;
-    
-    let totalColBoxes = colBoxCols * colBoxRows;
-
-    for (let i = 0; i < totalColBoxes; i++) {
-     let boxColor = paletteColors[i];
-     if (!boxColor) continue;
-     
-     let box = getColBoxBounds(i);
-
-     if (insideColBoxColArea(localX, localY, box, colBoxFrame)) {
-        currentPenColor = boxColor;
-        return true;
-      }
-    }
-
-   return false;
- }
-
-
-
 function insideColBoxColorArea(mx, my, box, z) {
  return (mx > box.x1 + 2 * z && mx < box.x2 - z && my > box.y1 + 2 * z && my < box.y2 - z);
 }
@@ -527,6 +533,7 @@ function checkColorPaletteClick(localX, localY) {
  let totalColBoxes = colBoxCols * colBoxRows;
 
  for (let i = 0; i < totalColBoxes; i++) {
+   let boxColor = primaryPalette[i];
    if (!boxColor) continue;
 
    let box = getColBoxBounds(i);
@@ -540,9 +547,16 @@ function checkColorPaletteClick(localX, localY) {
  return false;
 }
 
-
 function insideColPaletteArea(x, y) {
- return (x > insideColPaletteArea.x1 && x < insideColPaletteArea.x2 && y > insideColPaletteArea.y1 && y < insideColPaletteArea.y2);
+ return (x > colPaletteArea.x1 && x < colPaletteArea.x2 && y > colPaletteArea.y1 && y < colPaletteArea.y2);
+}
+
+function insidePopUpBoxLButtonArea(x, y) {
+ return (x > popUpBox.x1 + 50 && x < popUpBox.x1 + 175 && y > popUpBox.y1 + 150 && y < popUpBox.y1 + 200);
+}
+
+function insidePopUpBoxRButtonArea(x, y) {
+ return (x > popUpBox.x1 + 225 && x < popUpBox.x1 + 350 && y > popUpBox.y1 + 150 && y < popUpBox.y1 + 200);
 }
 
 // contains functions related to the drawing area
@@ -561,7 +575,7 @@ function insideDrawArea(x, y) {
 // ------------------------------------------------------------------------------------------------------------------------------
 
 function translateDrawing() {
- if (xPopUpBox) return;
+ if (xPopUpBox || blockNextDraw) return;
   let translateX = mouseX - offsetX;
   let translateY = mouseY - offsetY;
   let translatePMouseX = pmouseX - offsetX;
@@ -617,11 +631,15 @@ function setup() {
  // Creates clear graphics layer so user drawing doesn't get rewritten every frame
   drawingLayer = createGraphics(width, height);
   drawingLayer.clear();
+
+// cursor("none");
+
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------ 
 // Draw() Function
 // ------------------------------------------------------------------------------------------------------------------------------  
+
 
 function draw() {
   background(255);
@@ -759,7 +777,10 @@ function draw() {
    // draws popup window + shadow
     drawPopUpShadow(popUpBox.x1 + 10, popUpBox.y1 + 10, popUpBox.x2 + 10, popUpBox.y2 + 10);
     drawFrame(popUpBox.x1, popUpBox.y1, popUpBox.x2, popUpBox.y2, 3);
-    drawTab(popUpBox.x1 + 4, popUpBox.y1 + 4, popUpBox.x2 - 4, popUpBox.y1 + 28, "#01017A"); 
+    drawTab(popUpBox.x1 + 4, popUpBox.y1 + 4, popUpBox.x2 - 4, popUpBox.y1 + 28, "#01017A");
+    drawText("Message", popUpBox.x1 + 10, popUpBox.y1 + 10, 2, 1, 255); 
+    drawText("Are you sure you want to continue?", popUpBox.x1 + 35, popUpBox.y1 + 60, 2, 1, 0);
+    drawText("All unsaved changes will be lost!", popUpBox.x1 + 45, popUpBox.y1 + 100, 2, 1, 0);
     
    // Left/right popup buttons:
    // if mouse hovers over the left popup window button, it darkens
@@ -770,8 +791,12 @@ function draw() {
        shadow: 40,
        highlight: 150,
       });
+     drawText("OK", popUpBox.x1 + 100, popUpBox.y1 + 169, 2, 1, 255);
+
     } else {
+
      drawFrame(popUpBox.x1 + 50, popUpBox.y1 + 150, popUpBox.x1 + 175, popUpBox.y1 + 200, 3);
+     drawText("OK", popUpBox.x1 + 100, popUpBox.y1 + 169, 2, 1, 0);
     }
 
    // if mouse hovers over the right popup window button, it darkens
@@ -782,8 +807,12 @@ function draw() {
        shadow: 40,
        highlight: 150,
       });
+     drawText("Cancel", popUpBox.x1 + 257, popUpBox.y1 + 169, 2, 1, 255);
+    
     } else {
+
      drawFrame(popUpBox.x1 + 225, popUpBox.y1 + 150, popUpBox.x1 + 350, popUpBox.y1 + 200, 3);
+     drawText("Cancel", popUpBox.x1 + 257, popUpBox.y1 + 169, 2, 1, 0);
     }
  
    // if mouse hovers over popup x button, it turns red
@@ -806,7 +835,16 @@ function draw() {
 
  if (insideDrawArea(mouseX - offsetX, mouseY - offsetY) && xPopUpBox == false) {
    push();
-   fill(currentPenColor);
+   
+   if (mouseIsPressed) {
+     stroke(currentPenColor);
+     fill(currentPenColor);
+   } else {
+     stroke(currentPenColor);
+     noFill(); 
+   }
+
+   strokeWeight(2);
    circle(mouseX, mouseY, 10);
    pop();
   }

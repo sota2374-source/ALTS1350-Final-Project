@@ -1,3 +1,5 @@
+// 06-sketch.js
+
 // ------------------------------------------------------------------------------------------------------------------------------ 
 // Setup() Function
 // ------------------------------------------------------------------------------------------------------------------------------ 
@@ -49,7 +51,7 @@ function draw() {
   });
 
 // text for file name
-  drawText("New Project - No_File_Name", 15, 18, 2.5, 1.5, 255);
+  drawText("New Project - Untitled", 15, 18, 2.5, 1.5, 255);
 
 // if mouse hovers over minimize button, it turns green
  // otherwise, it stays neutral
@@ -158,31 +160,42 @@ function draw() {
    // draws popup window + shadow
     drawPopUpShadow(popUpBox.x1 + 10, popUpBox.y1 + 10, popUpBox.x2 + 10, popUpBox.y2 + 10);
     drawFrame(popUpBox.x1, popUpBox.y1, popUpBox.x2, popUpBox.y2, 3);
-    drawTab(popUpBox.x1 + 4, popUpBox.y1 + 4, popUpBox.x2 - 4, popUpBox.y1 + 28, "#01017A"); 
+    drawTab(popUpBox.x1 + 4, popUpBox.y1 + 4, popUpBox.x2 - 4, popUpBox.y1 + 28, "#01017A");
+    drawText("Message", popUpBox.x1 + 10, popUpBox.y1 + 10, 2, 1, 255); 
+    drawText("Are you sure you want to continue?", popUpBox.x1 + 35, popUpBox.y1 + 60, 2, 1, 0);
+    drawText("All unsaved changes will be lost!", popUpBox.x1 + 45, popUpBox.y1 + 100, 2, 1, 0);
     
    // Left/right popup buttons:
    // if mouse hovers over the left popup window button, it darkens
     // otherwise, it stays neutral
-    if (mouseHover(popUpBox.x1 + 50, popUpBox.y1 + 150, popUpBox.x1 + 175, popUpBox.y1 + 200)) {
-      drawFrame(popUpBox.x1 + 50, popUpBox.y1 + 150, popUpBox.x1 + 175, popUpBox.y1 + 200, 3, {
+    if (mouseHover(popUpBox.x1 + 60, popUpBox.y1 + 150, popUpBox.x1 + 185, popUpBox.y1 + 200)) {
+      drawFrame(popUpBox.x1 + 60, popUpBox.y1 + 150, popUpBox.x1 + 185, popUpBox.y1 + 200, 3, {
        fill: 100,
        shadow: 40,
        highlight: 150,
       });
+     drawText("OK", popUpBox.x1 + 110, popUpBox.y1 + 169, 2, 1, 255);
+
     } else {
-     drawFrame(popUpBox.x1 + 50, popUpBox.y1 + 150, popUpBox.x1 + 175, popUpBox.y1 + 200, 3);
+
+     drawFrame(popUpBox.x1 + 60, popUpBox.y1 + 150, popUpBox.x1 + 185, popUpBox.y1 + 200, 3);
+     drawText("OK", popUpBox.x1 + 110, popUpBox.y1 + 169, 2, 1, 0);
     }
 
    // if mouse hovers over the right popup window button, it darkens
     // otherwise, it stays neutral
-    if (mouseHover(popUpBox.x1 + 225, popUpBox.y1 + 150, popUpBox.x1 + 350, popUpBox.y1 + 200)) {
-     drawFrame(popUpBox.x1 + 225, popUpBox.y1 + 150, popUpBox.x1 + 350, popUpBox.y1 + 200, 3, {
+    if (mouseHover(popUpBox.x1 + 215, popUpBox.y1 + 150, popUpBox.x1 + 340, popUpBox.y1 + 200)) {
+     drawFrame(popUpBox.x1 + 215, popUpBox.y1 + 150, popUpBox.x1 + 340, popUpBox.y1 + 200, 3, {
        fill: 100,
        shadow: 40,
        highlight: 150,
       });
+     drawText("Cancel", popUpBox.x1 + 247, popUpBox.y1 + 169, 2, 1, 255);
+    
     } else {
-     drawFrame(popUpBox.x1 + 225, popUpBox.y1 + 150, popUpBox.x1 + 350, popUpBox.y1 + 200, 3);
+
+     drawFrame(popUpBox.x1 + 215, popUpBox.y1 + 150, popUpBox.x1 + 340, popUpBox.y1 + 200, 3);
+     drawText("Cancel", popUpBox.x1 + 247, popUpBox.y1 + 169, 2, 1, 0);
     }
  
    // if mouse hovers over popup x button, it turns red
@@ -223,5 +236,4 @@ function draw() {
  translateDrawing();
 
 }
-
 

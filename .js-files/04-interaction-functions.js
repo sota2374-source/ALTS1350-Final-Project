@@ -1,3 +1,5 @@
+// 04-interaction-functions.js
+
 // mouseHover function ----------------------------------------------------------------------------------------------------------
 function mouseHover(x1, y1, x2, y2) {
  return mouseX >= x1 + offsetX && mouseX <= x2 + offsetX && mouseY >= y1 + offsetY && mouseY <= y2 + offsetY;
@@ -13,9 +15,24 @@ function mousePressed() {
      xPopUpBox = false;
      isDraggingPopUp = false;
      resetPopUpBox();
+     blockNextDraw = true;
      return;
    }
  
+ if (insidePopUpBoxLButtonArea(localX, localY)) {
+     xPopUpBox = false;
+     resetPopUpBox();
+     blockNextDraw = true;
+     return;
+  }
+
+  if (insidePopUpBoxRButtonArea(localX, localY)) {
+     xPopUpBox = false;
+     resetPopUpBox();
+     blockNextDraw = true;
+     return;
+  }
+
    if (xPopUpBoxBoundary(localX, localY)) {
      isDraggingPopUp = true;
      dragOffsetX = localX - popUpBox.x1;
@@ -46,6 +63,7 @@ function mousePressed() {
 // mouseReleased function ------------------------------------------------------------------------------------------------------- 
 function mouseReleased() {
  isDraggingPopUp = false;
+ blockNextDraw = false;
 }
 
 // drag logic:
@@ -124,7 +142,14 @@ function checkColorPaletteClick(localX, localY) {
  return false;
 }
 
-
 function insideColPaletteArea(x, y) {
  return (x > colPaletteArea.x1 && x < colPaletteArea.x2 && y > colPaletteArea.y1 && y < colPaletteArea.y2);
+}
+
+function insidePopUpBoxLButtonArea(x, y) {
+ return (x > popUpBox.x1 + 60 && x < popUpBox.x1 + 185 && y > popUpBox.y1 + 150 && y < popUpBox.y1 + 200);
+}
+
+function insidePopUpBoxRButtonArea(x, y) {
+ return (x > popUpBox.x1 + 215 && x < popUpBox.x1 + 340 && y > popUpBox.y1 + 150 && y < popUpBox.y1 + 200);
 }

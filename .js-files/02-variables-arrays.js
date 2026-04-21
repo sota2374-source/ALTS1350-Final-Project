@@ -1,8 +1,12 @@
+// 02-variables-arrays.js
+
 // ------------------------------------------------------------------------------------------------------------------------------ 
 // Declaring Variables & Arrays
 // ------------------------------------------------------------------------------------------------------------------------------  
 
 let drawingLayer;
+
+let blockNextDraw = false;
 
 // insets penArea boundary so user can't draw on drawArea frame
 let penInset = 5;
@@ -50,16 +54,34 @@ let colPaletteH = colBoxRows * colBoxSize + (colBoxRows - 1) * colBoxGap;
 let colPaletteArea = {x1: colBoxStartX, y1: colBoxStartY, x2: colBoxStartX + colPaletteW, y2: colBoxStartY + colPaletteH};
 
 // Color palette data:
-let primaryPalette = ["#c91f96", "#06402b", "#0040ff", "#FF0000", "#ff9900", "#ffe600", "#00cc66", "#00ffff",
-  "#6633ff", "#ff66cc", "#999999", "#ffffff",
-  "#000000", "#7a3b00", "#4b0082", "#6b8e23",
-  "#4682b4", "#8b0000", "#ff1493", "#20b2aa",
-  "#daa520", "#708090", "#adff2f", "#ff4500",
-  "#2f4f4f", "#9932cc", "#dc143c", "#1e90ff",
-  "#228b22", "#ff69b4", "#b8860b", "#00ced1",
-  "#cd5c5c", "#556b2f", "#483d8b", "#8fbc8f",
-  "#ba55d3", "#f4a460", "#a0522d", "#5f9ea0",
-  "#c0c0c0", "#87ceeb", "#d2691e", "#ffb6c1",
-  "#3cb371", "#b22222", "#4169e1", "#ffd700"];
+let primaryPalette = [
+  "#ffffff", "#d9d9d9", "#808080", "#000000",
+  "#fff2cc", "#ffe599", "#ffd966", "#f1c232",
+  "#fce5cd", "#f9cb9c", "#f6b26b", "#e69138",
+  "#f4cccc", "#ea9999", "#e06666", "#cc0000",
+  "#f4cccc", "#f4b6c2", "#ff66cc", "#cc3399",
+  "#d9d2e9", "#b4a7d6", "#8e7cc3", "#674ea7",
+  "#cfe2f3", "#9fc5e8", "#6fa8dc", "#3d85c6",
+  "#d0e0e3", "#a2c4c9", "#76a5af", "#45818e",
+  "#d9ead3", "#b6d7a8", "#93c47d", "#6aa84f",
+  "#fff2cc", "#ffe599", "#d9b26b", "#bf9000",
+  "#ead1dc", "#d5a6bd", "#c27ba0", "#a64d79",
+  "#c9daf8", "#a4c2f4", "#6d9eeb", "#1155cc"
+];
+
+let pastelsPalette = [
+  "#ffd9d9", "#ffdcd9", "#ffdfd9", "#ffe2d9",
+  "#ffe6d9", "#ffe9d9", "#ffecd9", "#fff0d9",
+  "#fff3d9", "#fff6d9", "#fff9d9", "#fffdd9",
+  "#f9ffd9", "#f6ffd9", "#f3ffd9", "#efffd9",
+  "#ecffd9", "#e9ffd9", "#e6ffd9", "#e2ffd9",
+  "#dfffd9", "#dcffd9", "#d9ffd9", "#d9ffdc",
+  "#d9ffdf", "#d9ffe2", "#d9ffe6", "#d9ffe9",
+  "#d9ffec", "#d9fff0", "#d9fff3", "#d9fff6",
+  "#d9fff9", "#d9fffd", "#d9f9ff", "#d9f6ff",
+  "#d9f3ff", "#d9efff", "#d9ecff", "#d9e9ff",
+  "#d9e6ff", "#dce2ff", "#dfdfff", "#e2dcff",
+  "#e6d9ff", "#e9d9ff", "#ecd9ff", "#f0d9ff"
+];
 
 let currentPenColor = "#000000";

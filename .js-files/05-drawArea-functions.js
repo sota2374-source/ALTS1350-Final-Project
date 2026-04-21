@@ -1,3 +1,5 @@
+// 05-drawArea-functions.js
+
 // contains functions related to the drawing area
 
 // ------------------------------------------------------------------------------------------------------------------------------ 
@@ -14,7 +16,7 @@ function insideDrawArea(x, y) {
 // ------------------------------------------------------------------------------------------------------------------------------
 
 function translateDrawing() {
- if (xPopUpBox) return;
+ if (xPopUpBox || blockNextDraw) return;
   let translateX = mouseX - offsetX;
   let translateY = mouseY - offsetY;
   let translatePMouseX = pmouseX - offsetX;
