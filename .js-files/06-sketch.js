@@ -213,6 +213,9 @@ function draw() {
     }
   }
 
+drawFrame(85, 80, 135, 130, 3);
+drawFrame(30, 80, 80, 130, 3);
+
  // pop button for x/y translation
  pop(); 
 
