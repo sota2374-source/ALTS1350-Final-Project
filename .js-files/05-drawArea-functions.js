@@ -17,16 +17,30 @@ function insideDrawArea(x, y) {
 
 function translateDrawing() {
  if (xPopUpBox || blockNextDraw) return;
-  let translateX = mouseX - offsetX;
-  let translateY = mouseY - offsetY;
-  let translatePMouseX = pmouseX - offsetX;
-  let translatePMouseY = pmouseY - offsetY; 
- 
- if (mouseIsPressed && insideDrawArea(translateX, translateY) && insideDrawArea(translatePMouseX, translatePMouseY)) {
-   drawingLayer.stroke(currentPenColor);
-   drawingLayer.strokeWeight(5);
-   drawingLayer.line(translateX, translateY, translatePMouseX, translatePMouseY);
- }
+   let localX = mouseX - offsetX;
+   let localY = mouseY - offsetY;
+
+  if (mouseIsPressed && insideDrawArea(localX, localY)) {
+    if (!currentStroke) {
+      startStroke(localX, localY);
+    } else {
+      AddPointToStroke(localX, localY);
+    }
+
+    redrawDrawingLayer();
+     
+   if (currentStroke) {
+      drawingLayer.stroke(currentStroke.color);
+      drawingLayer.strokeWeight(currentStroke.weight);
+      drawingLayer.noFill();
+
+     for (let i = 1; i < currentStroke.points.length; i++) {
+       let p1 = currentStroke.points[i - 1];
+       let p2 = currentStroke.points[i];
+       drawingLayer.line(p1.x, p1.y, p2.x, p2.y);
+      }
+    }
+  }
 }
 
 
@@ -56,4 +70,65 @@ function drawPngGrid(x1, y1, x2, y2, tileSize = 20) {
     }
   
    pop(); 
+}
+
+function redrawDrawingLayer() {
+  drawingLayer.clear();
+
+ for (let i = 0; i < strokes.length; i++) {
+   drawingLayer.stroke(strokeData.color);
+   drawingLayer.strokeWeight(strokeData.weight);
+   drawingLayer.noFill();
+
+   for (let j = 1; j < strokeData.points.length; j++) {
+     let p1 = strokeData.points[j - 1];
+     let p2 = strokeData.points[j];
+     drawingLayer.line(p1.x, p1.y, p2.x, p2.y);
+    }
+  }
+}
+
+function startStroke(x, y) {
+  currentStroke = {
+    color: currentPenColor,
+    weight: currentPenWeight,
+    points: [{x: x, y: y}]
+  };
+}
+
+function AddPointToStroke(x, y) {
+ if (currentStroke) {
+   currentStroke.points.push({ x: x, y: y});
+  }
+}
+
+function finishStroke() {
+  if (currentStroke && currentStroke.points.length > 0) {
+   strokes.push(currentStroke);
+   currentStroke = null;
+   undoStrokes = [];
+   redrawDrawingLayer();
+  }
+}
+
+function undoLastStroke() {
+  if (strokes.length > 0) {
+    let removedStroke = strokes.pop();
+    undoStrokes.push(removedStroke);
+    redrawDrawingLayer();
+  }
+}
+
+function redoLastStroke() {
+ if (undoStrokes.length > 0) {
+   let restoredStroke = undoStrokes.pop();
+   strokes.push(restoredStroke);
+   redrawDrawingLayer();
+  }
+}
+
+function clearCanvasDrawing() {
+ strokes = [];
+ currentStroke = null;
+ drawingLayer.clear();
 }

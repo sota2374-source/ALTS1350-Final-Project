@@ -85,3 +85,9 @@ let pastelsPalette = [
 ];
 
 let currentPenColor = "#000000";
+
+let strokes = [];
+let undoStrokes = [];
+let currentStroke = null;
+
+let currentPenWeight = 5;

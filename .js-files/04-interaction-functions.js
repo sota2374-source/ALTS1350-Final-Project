@@ -20,6 +20,7 @@ function mousePressed() {
    }
  
  if (insidePopUpBoxLButtonArea(localX, localY)) {
+     clearCanvasDrawing();
      xPopUpBox = false;
      resetPopUpBox();
      blockNextDraw = true;
@@ -64,6 +65,7 @@ function mousePressed() {
 function mouseReleased() {
  isDraggingPopUp = false;
  blockNextDraw = false;
+ finishStroke();
 }
 
 // drag logic:
@@ -152,4 +154,15 @@ function insidePopUpBoxLButtonArea(x, y) {
 
 function insidePopUpBoxRButtonArea(x, y) {
  return (x > popUpBox.x1 + 215 && x < popUpBox.x1 + 340 && y > popUpBox.y1 + 150 && y < popUpBox.y1 + 200);
+}
+
+// THIS IS TEMPORARY UNTIL BUTTONS ARE HARD CODED
+function keyPressed() {
+  if (key === "z" || key === "Z") {
+    undoLastStroke();
+  }
+
+  if (key === "y" || key === "Y") {
+    redoLastStroke();
+  }
 }

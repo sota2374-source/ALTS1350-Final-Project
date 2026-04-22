@@ -231,7 +231,7 @@ drawFrame(30, 80, 80, 130, 3);
    }
 
    strokeWeight(2);
-   circle(mouseX, mouseY, 10);
+   circle(mouseX, mouseY, currentPenWeight);
    pop();
   }
 
