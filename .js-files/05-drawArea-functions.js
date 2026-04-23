@@ -24,7 +24,7 @@ function translateDrawing() {
     if (!currentStroke) {
       startStroke(localX, localY);
     } else {
-      AddPointToStroke(localX, localY);
+      addPointToStroke(localX, localY);
     }
 
     redrawDrawingLayer();
@@ -33,6 +33,11 @@ function translateDrawing() {
       drawingLayer.stroke(currentStroke.color);
       drawingLayer.strokeWeight(currentStroke.weight);
       drawingLayer.noFill();
+
+     if (currentStroke.points.length === 1) {
+       let p = currentStroke.points[0];
+       drawingLayer.point(p.x, p.y);
+      }
 
      for (let i = 1; i < currentStroke.points.length; i++) {
        let p1 = currentStroke.points[i - 1];
@@ -73,9 +78,10 @@ function drawPngGrid(x1, y1, x2, y2, tileSize = 20) {
 }
 
 function redrawDrawingLayer() {
-  drawingLayer.clear();
+ drawingLayer.clear();
 
  for (let i = 0; i < strokes.length; i++) {
+   let strokeData = strokes[i];
    drawingLayer.stroke(strokeData.color);
    drawingLayer.strokeWeight(strokeData.weight);
    drawingLayer.noFill();
@@ -96,7 +102,7 @@ function startStroke(x, y) {
   };
 }
 
-function AddPointToStroke(x, y) {
+function addPointToStroke(x, y) {
  if (currentStroke) {
    currentStroke.points.push({ x: x, y: y});
   }
@@ -129,6 +135,7 @@ function redoLastStroke() {
 
 function clearCanvasDrawing() {
  strokes = [];
+ undoStrokes = [];
  currentStroke = null;
  drawingLayer.clear();
 }

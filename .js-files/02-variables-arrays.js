@@ -4,6 +4,8 @@
 // Declaring Variables & Arrays
 // ------------------------------------------------------------------------------------------------------------------------------  
 
+// drawArea ---------------------------------------------------------------------------------------------------------------------  
+
 let drawingLayer;
 
 let blockNextDraw = false;
@@ -18,6 +20,9 @@ let penArea = {x1: drawArea.x1 + penInset, y1: drawArea.y1 + penInset, x2: drawA
 // grid button/text values, simplifies button hover mechanics
 let gridBVals = {x1: 930, y1: 45, x2: 990, y2: 75, z: 3};
 let gridText = {x: 938.5, y: 53, size: 2.5, spacing: 1};
+
+let undoButtonVals = {x1: 840, y1: 45, x2: 880, y2: 75, z: 3};
+let redoButtonVals = {x1: 885, y1: 45, x2: 925, y2: 75, z: 3};
 
 // creates array for popUpBox boundaries, allows box to be moved around
 const popUpStartPos = {x1: 300, y1: 200, x2: 700, y2: 425}

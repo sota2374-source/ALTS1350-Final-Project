@@ -249,6 +249,7 @@ function drawTab( x1, y1, x2, y2, c = "blue") {
   pop();
 }
 
+
 // drawText function ------------------------------------------------------------------------------------------------------------ 
  // Note: size = the size of each value (0 or 1) in the grid
    // size = 1 means each value is going to be 1 x 1 pixel
@@ -320,3 +321,40 @@ function drawColorPalette() {
     }
   }
 }
+
+function createIcon (icon, x, y, size, c = 0) {
+push();
+   noStroke();
+   fill(c);
+  
+ let grid = iconData[icon];
+  
+  for (let row = 0; row < grid.length; row++) {
+   for (let col = 0; col < grid[row].length; col++)
+      
+    if(grid[row][col] === "1") {
+     rect(x + col * size, y + row * size, size, size);
+    }
+  } 
+
+ pop();
+
+} 
+
+function drawIcon(str, x, y, size = 1, spacing = 1, c = 0) {
+ let cursorX = x;
+   
+  for (let i = 0; i < str.length; i++) {
+   let icon = str[i];
+   let grid = iconData[icon];
+
+
+    if (grid) {
+     createIcon(icon, cursorX, y, size, c);
+      
+     let iconWidth = grid[0].length * size;
+     cursorX += iconWidth + spacing;
+    }
+  }
+};
+

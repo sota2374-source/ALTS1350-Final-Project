@@ -143,6 +143,32 @@ function draw() {
    drawText("GRID", gridText.x, gridText.y, gridText.size, gridText.spacing, 0);
   }
 
+
+
+  if (mouseHover(undoButtonVals.x1, undoButtonVals.y1, undoButtonVals.x2, undoButtonVals.y2)) {
+   drawFrame(undoButtonVals.x1, undoButtonVals.y1, undoButtonVals.x2, undoButtonVals.y2, undoButtonVals.z, {
+     fill: 100,
+     shadow: 40,
+     highlight: 150,
+    });
+   drawIcon("U", undoButtonVals.x1 + 8, undoButtonVals.y1 + 8, 2, 1, 255)
+  } else {
+   drawFrame(undoButtonVals.x1, undoButtonVals.y1, undoButtonVals.x2, undoButtonVals.y2, undoButtonVals.z)
+   drawIcon("U", undoButtonVals.x1 + 8, undoButtonVals.y1 + 8, 2, 1, 0);
+  }
+
+  if (mouseHover(redoButtonVals.x1, redoButtonVals.y1, redoButtonVals.x2, redoButtonVals.y2)) {
+   drawFrame(redoButtonVals.x1, redoButtonVals.y1, redoButtonVals.x2, redoButtonVals.y2, redoButtonVals.z, {
+     fill: 100,
+     shadow: 40,
+     highlight: 150,
+    });
+   drawIcon("R",redoButtonVals.x1 + 8, redoButtonVals.y1 + 8, 2, 1, 255);
+  } else {
+   drawFrame(redoButtonVals.x1, redoButtonVals.y1, redoButtonVals.x2, redoButtonVals.y2, redoButtonVals.z)
+   drawIcon("R", redoButtonVals.x1 + 8, redoButtonVals.y1 + 8, 2, 1, 0);
+  }
+
 // creates drawingLayer for user drawing
   image(drawingLayer, 0, 0);
 
@@ -212,9 +238,6 @@ function draw() {
      drawText("X", popUpBox.x1 + 379, popUpBox.y1 + 10, 2, 1, 0);
     }
   }
-
-drawFrame(85, 80, 135, 130, 3);
-drawFrame(30, 80, 80, 130, 3);
 
  // pop button for x/y translation
  pop(); 

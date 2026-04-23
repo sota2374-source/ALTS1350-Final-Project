@@ -59,6 +59,15 @@ function mousePressed() {
    return;
   }
 
+ if (mouseHover(undoButtonVals.x1, undoButtonVals.y1, undoButtonVals.x2, undoButtonVals.y2)) {
+   undoLastStroke();
+   return;
+  }
+
+  if (mouseHover(redoButtonVals.x1, redoButtonVals.y1, redoButtonVals.x2, redoButtonVals.y2)) {
+    redoLastStroke();
+    return;
+  }
 }
 
 // mouseReleased function ------------------------------------------------------------------------------------------------------- 
@@ -156,13 +165,12 @@ function insidePopUpBoxRButtonArea(x, y) {
  return (x > popUpBox.x1 + 215 && x < popUpBox.x1 + 340 && y > popUpBox.y1 + 150 && y < popUpBox.y1 + 200);
 }
 
-// THIS IS TEMPORARY UNTIL BUTTONS ARE HARD CODED
 function keyPressed() {
   if (key === "z" || key === "Z") {
-    undoLastStroke();
+   undoLastStroke();
   }
 
   if (key === "y" || key === "Y") {
-    redoLastStroke();
+   redoLastStroke();
   }
 }
