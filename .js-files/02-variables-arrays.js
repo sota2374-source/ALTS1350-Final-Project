@@ -6,16 +6,18 @@
 
 // drawArea ---------------------------------------------------------------------------------------------------------------------  
 
+// Creates drawing layer for user drawing
 let drawingLayer;
 
+// Blocks drawing first press after popup window closes to prevent accidental pen strokes from closing the popup box
 let blockNextDraw = false;
 
-// insets penArea boundary so user can't draw on drawArea frame
-let penInset = 5;
+// Default pen strokeweight
+let currentStrokeWeight = 2;
 
 // creates drawArea and penArea boundaries so users can only create within boundaries
 let drawArea = {x1: 350, y1: 80, x2: 990, y2: 615};
-let penArea = {x1: drawArea.x1 + penInset, y1: drawArea.y1 + penInset, x2: drawArea.x2 - penInset, y2: drawArea.y2 - penInset};
+let penArea = {x1: drawArea.x1 + 5 + currentStrokeWeight, y1: drawArea.y1 + 5 + currentStrokeWeight, x2: drawArea.x2 - currentStrokeWeight, y2: drawArea.y2 - currentStrokeWeight};
 
 // grid button/text values, simplifies button hover mechanics
 let gridBVals = {x1: 930, y1: 45, x2: 990, y2: 75, z: 3};
@@ -28,6 +30,7 @@ let redoButtonVals = {x1: 885, y1: 45, x2: 925, y2: 75, z: 3};
 const popUpStartPos = {x1: 300, y1: 200, x2: 700, y2: 425}
 let popUpBox = {x1: 300, y1: 200, x2: 700, y2: 425};
 
+// Sets default settings for popup window
 let isDraggingPopUp = false;
 let dragOffsetX = 0;
 let dragOffsetY = 0;
@@ -43,6 +46,7 @@ let offsetX, offsetY;
 let xPopUpBox = false;
 let pngGrid = false;
 
+// Setup for color grid
 let colBoxCols = 4;
 let colBoxRows = 12;
 
@@ -74,6 +78,7 @@ let primaryPalette = [
   "#c9daf8", "#a4c2f4", "#6d9eeb", "#1155cc"
 ];
 
+// Secondary palette of pastel colors
 let pastelsPalette = [
   "#ffd9d9", "#ffdcd9", "#ffdfd9", "#ffe2d9",
   "#ffe6d9", "#ffe9d9", "#ffecd9", "#fff0d9",
@@ -89,10 +94,10 @@ let pastelsPalette = [
   "#e6d9ff", "#e9d9ff", "#ecd9ff", "#f0d9ff"
 ];
 
+// Defaults pen color to black
 let currentPenColor = "#000000";
 
+// Arrays to store user strokes
 let strokes = [];
 let undoStrokes = [];
 let currentStroke = null;
-
-let currentPenWeight = 5;

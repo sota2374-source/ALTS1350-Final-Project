@@ -97,7 +97,7 @@ function redrawDrawingLayer() {
 function startStroke(x, y) {
   currentStroke = {
     color: currentPenColor,
-    weight: currentPenWeight,
+    weight: currentStrokeWeight,
     points: [{x: x, y: y}]
   };
 }
@@ -117,6 +117,7 @@ function finishStroke() {
   }
 }
 
+// Function for undoing strokes
 function undoLastStroke() {
   if (strokes.length > 0) {
     let removedStroke = strokes.pop();
@@ -125,6 +126,7 @@ function undoLastStroke() {
   }
 }
 
+// Function for redoing strokes
 function redoLastStroke() {
  if (undoStrokes.length > 0) {
    let restoredStroke = undoStrokes.pop();

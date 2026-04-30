@@ -109,6 +109,7 @@ function movePopUpDrag() {
 // xPopUpBoxBoundary Function
 // ------------------------------------------------------------------------------------------------------------------------------ 
 
+// Sets popup box boundaries, allows box to be moved and values to update accordingly
 function xPopUpBoxBoundary (x,y) {
   return( x > popUpBox.x1 + 4 && x < popUpBox.x2 - 4 && y > popUpBox.y1 + 4 && y < popUpBox.y1 + 28);
 }
@@ -118,6 +119,7 @@ function xPopUpBoxBoundary (x,y) {
 // xPopUpBoxBoundary Function
 // ------------------------------------------------------------------------------------------------------------------------------ 
 
+// Resets popup box to center of screen once closed out
 function resetPopUpBox() {
  popUpBox.x1 = popUpStartPos.x1;
  popUpBox.y1 = popUpStartPos.y1;
@@ -129,6 +131,7 @@ function resetPopUpBox() {
 // insideColBoxColArea Function
 // ------------------------------------------------------------------------------------------------------------------------------ 
 
+// Sets color box area boundaries for user to change pen color
 function insideColBoxColorArea(mx, my, box, z) {
  return (mx > box.x1 + 2 * z && mx < box.x2 - z && my > box.y1 + 2 * z && my < box.y2 - z);
 }
@@ -172,5 +175,21 @@ function keyPressed() {
 
   if (key === "y" || key === "Y") {
    redoLastStroke();
+  }
+  
+  if (key === "w" || key === "W") {
+   currentStrokeWeight ++
+
+   if (currentStrokeWeight > 50) {
+     currentStrokeWeight = 50;
+    }
+  }
+
+  if (key == "e" || key == "E") {
+    currentStrokeWeight --
+
+    if (currentStrokeWeight < 1) {
+      currentStrokeWeight = 1;
+    }
   }
 }

@@ -4,9 +4,10 @@
 // textData (alphabet data)
 // ------------------------------------------------------------------------------------------------------------------------------  
 
-
+// Data for all button/mouse icons 
 let iconData = {
-   
+ 
+ // Mouse icon
  M: [
     "11",
     "101",
@@ -28,6 +29,7 @@ let iconData = {
     "this needs to be finished"
    ],
 
+ // Undo arrow icon
  U: [
     "00010000000",
     "00110000000",
@@ -38,6 +40,7 @@ let iconData = {
     "00010000000",
    ],
 
+ // Redo arrow icon
  R: [
     "00000001000",
     "00000001100",
@@ -48,7 +51,8 @@ let iconData = {
     "00000001000",
  ]
 }
- 
+
+// Data for all text (uppercase, lowercase, & symbols)
 let textData = {
  A: [
      "01110",

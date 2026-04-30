@@ -6,7 +6,9 @@
     // (x1, y1) = top left corner
     // (x2, y2) = bottom right corner
     // z = frame thickness
-function drawFrame(x1, y1, x2, y2, z, colors = {}) {
+
+ // Draws frames for buttons
+    function drawFrame(x1, y1, x2, y2, z, colors = {}) {
 
   let {
     fill: c1 = 210,
@@ -293,6 +295,7 @@ function drawText(str, x, y, size = 1, spacing = 1, c = 0) {
   }
 }
 
+// Creates boundaries for each color box so that pen color only changes within the color box's boundaries
 function getColBoxBounds(index) {
   let col = index % colBoxCols;
   let row = floor(index / colBoxCols);
@@ -305,6 +308,7 @@ function getColBoxBounds(index) {
   return { x1, y1, x2, y2 };
 }
 
+// Draws color palette
 function drawColorPalette() {
  let totalColBoxes = colBoxCols * colBoxRows;
 
@@ -322,6 +326,7 @@ function drawColorPalette() {
   }
 }
 
+// Creates icons using iconData (undo/redo arrows, etc.)
 function createIcon (icon, x, y, size, c = 0) {
 push();
    noStroke();
@@ -341,6 +346,7 @@ push();
 
 } 
 
+// Converts raw data into drawings 
 function drawIcon(str, x, y, size = 1, spacing = 1, c = 0) {
  let cursorX = x;
    

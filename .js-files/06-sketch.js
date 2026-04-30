@@ -253,8 +253,8 @@ function draw() {
      noFill(); 
    }
 
-   strokeWeight(2);
-   circle(mouseX, mouseY, currentPenWeight);
+   strokeWeight(currentStrokeWeight);
+   circle(mouseX, mouseY, currentStrokeWeight / 5);
    pop();
   }
 
